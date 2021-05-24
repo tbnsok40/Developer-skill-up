@@ -1,5 +1,4 @@
-import {REDO, STATUS, SET_UNDO, PLUS, MINUS, POP_UNDO, CALCULATE} from "../actions/type";
-
+import {SET_REDO, STATUS, SET_UNDO, PLUS, MINUS,POP_REDO, POP_UNDO, CALCULATE} from "../actions/type";
 
 
 const initialState = {
@@ -32,16 +31,31 @@ export default (state = initialState, action) => {
 
         case POP_UNDO:
             let temp = state.undo.pop()
-            console.log("temp: ", temp)
-            // console.log(state.currVal, state.undo.pop())
-            return{
+            return {
                 ...state,
                 undo: state.undo,
                 currVal: state.undo[state.undo.length - 1]
             }
 
-        case REDO:
-            return {};
+        case SET_REDO:
+            let tempArray2 = state.redo;
+            tempArray2.push(action.payload)
+            return {
+                ...state,
+                redo: tempArray2
+            };
+
+        case POP_REDO:
+
+            let temp2 = state.redo.pop()
+            console.log(temp2)
+            return{
+                ...state,
+                redo: state.redo,
+                currVal: temp2
+
+            }
+
         default:
             return state;
     }

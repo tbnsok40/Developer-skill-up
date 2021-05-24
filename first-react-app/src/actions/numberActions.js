@@ -1,8 +1,8 @@
 import {
     STATUS,
     SET_UNDO, POP_UNDO,
-    REDO,
-    CALCULATE
+    POP_REDO,
+    CALCULATE, SET_REDO
 } from '../actions/type';
 
 export const getNumber = () => async dispatch => {
@@ -39,6 +39,25 @@ export const popUndo = () => async dispatch => {
     try {
         dispatch({
             type: POP_UNDO
+        });
+    } catch (err) {
+    }
+}
+
+export const setRedo = (number) => async dispatch => {
+    try {
+        dispatch({
+            type: SET_REDO,
+            payload: number
+        });
+    } catch (err){
+
+    }
+}
+export const popRedo = () => async dispatch => {
+    try {
+        dispatch({
+            type: POP_REDO
         });
     } catch (err) {
     }

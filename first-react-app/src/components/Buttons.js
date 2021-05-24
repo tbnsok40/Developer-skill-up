@@ -1,10 +1,10 @@
 import React, {Fragment, useEffect, useRef, useState} from "react";
-import {calcNumber, getNumber, minusNumber, setUndo, popUndo} from '../actions/numberActions'
+import {calcNumber, getNumber, minusNumber, setUndo, popUndo, setRedo, popRedo} from '../actions/numberActions'
 import {connect} from "react-redux";
 
 // input값을 가진 후에, reducer로 던져야한다, action(+/-)과 함께
 
-const Button = ({currVal: {currVal, undo}, calcNumber, setUndo, getNumber, popUndo}) => {
+const Button = ({currVal: {currVal, undo, redo}, calcNumber, setUndo, getNumber, popUndo, setRedo, popRedo}) => {
     useEffect(() => {
         getNumber();
     }, [])
@@ -12,6 +12,7 @@ const Button = ({currVal: {currVal, undo}, calcNumber, setUndo, getNumber, popUn
     const text = useRef();
     const [number, setNumber] = useState('')
     const [status, setStatus] = useState(true);
+    const [statusRedo, setStatusRedo] = useState(true);
 
     const checkValidity = (value) => {
         if (!value || isNaN(value)) {
@@ -48,13 +49,21 @@ const Button = ({currVal: {currVal, undo}, calcNumber, setUndo, getNumber, popUn
             setStatus(false);
         } else if (undo.length === 0) {
             setStatus(true);
+            setStatusRedo(true);
         }
     }
 
     const handleUndo = (e) => {
-        console.log(undo)
+        let temp = [...undo]; // for deep copy
+        // console.log('! ',temp.pop())
+        // console.log(undo)
         popUndo();
-        if (undo.length === 0) {
+        let num = temp.pop()
+        setRedo(num)
+        setStatusRedo(false)
+        if (undo.length !== 0) {
+
+        } else {
             setStatus(true)
         }
         // let tempUndo = undo;
@@ -66,6 +75,20 @@ const Button = ({currVal: {currVal, undo}, calcNumber, setUndo, getNumber, popUn
         // }else if (undo.length === 0) {
         //     setStatus(true);
         // }
+    }
+
+    // redo 한번 클릭하면 redo pop하면서 currVal 바구고, 다시 undo에 push
+    const handleRedo = (e) => {
+        if (redo.length === 1) {
+            setStatusRedo(true)
+        }
+        console.log(redo);
+        let temp = [...redo];
+        let num = temp.pop()
+        setUndo(num);
+        // setRedo()
+        popRedo();
+        // setUndo()
     }
 
     return (
@@ -83,7 +106,7 @@ const Button = ({currVal: {currVal, undo}, calcNumber, setUndo, getNumber, popUn
                 <button id="subButton" className="btn" onClick={e => handleNumber(e.target.innerText)}>
                     -
                 </button>
-                <button id="redoButton" className="btn" disabled>
+                <button id="redoButton" className="btn" disabled={statusRedo} onClick={e => handleRedo(e)}>
                     Redo
                 </button>
             </div>
@@ -93,4 +116,4 @@ const Button = ({currVal: {currVal, undo}, calcNumber, setUndo, getNumber, popUn
 const mapStateToProps = state => ({
     currVal: state.currVal,
 })
-export default connect(mapStateToProps, {calcNumber, getNumber, setUndo, popUndo})(Button);
+export default connect(mapStateToProps, {calcNumber, getNumber, setUndo, popUndo, setRedo, popRedo})(Button);
