@@ -4,16 +4,13 @@ import {connect} from "react-redux";
 
 // input값을 가진 후에, reducer로 던져야한다, action(+/-)과 함께
 
-const Button = ({currVal: {currVal}, calcNumber, getNumber, popUndo}) => {
+const Button = ({currVal: {currVal, undo}, calcNumber, setUndo, getNumber, popUndo}) => {
     useEffect(() => {
         getNumber();
     }, [])
 
-    let tempArray = [];
-
     const text = useRef();
     const [number, setNumber] = useState('')
-    const [undo, setUndo] = useState([])
     const [status, setStatus] = useState(true);
 
     const checkValidity = (value) => {
@@ -36,9 +33,9 @@ const Button = ({currVal: {currVal}, calcNumber, getNumber, popUndo}) => {
 
             // tempArray.push(num)
             // console.log(tempArray)
-            //
-            // setUndo(tempArray)
+
             calcNumber(num)
+            setUndo(num)
 
             setNumber('')
         }
@@ -47,7 +44,6 @@ const Button = ({currVal: {currVal}, calcNumber, getNumber, popUndo}) => {
     }
 
     const checkUndo = () => {
-        // console.log("here", undo.length)
         if (undo.length > 0) {
             setStatus(false);
         } else if (undo.length === 0) {
@@ -57,6 +53,10 @@ const Button = ({currVal: {currVal}, calcNumber, getNumber, popUndo}) => {
 
     const handleUndo = (e) => {
         console.log(undo)
+        popUndo();
+        if (undo.length === 0) {
+            setStatus(true)
+        }
         // let tempUndo = undo;
         // let popNum = tempUndo.pop()
         // // setUndo()

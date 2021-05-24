@@ -1,6 +1,6 @@
 import {
     STATUS,
-    UNDO, POP_UNDO,
+    SET_UNDO, POP_UNDO,
     REDO,
     CALCULATE
 } from '../actions/type';
@@ -27,12 +27,10 @@ export const calcNumber = (inputNumber) => async dispatch => {
 
 export const setUndo = (number) => async dispatch => {
     try {
-        if (number !== undefined) {
-            dispatch({
-                type: UNDO,
-                payload: number
-            });
-        }
+        dispatch({
+            type: SET_UNDO,
+            payload: number
+        });
     } catch (err) {
     }
 }
