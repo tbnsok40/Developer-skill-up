@@ -1,14 +1,8 @@
 def solution(n):
     result = []
-    for i in range(0, n):
-        temp = []
-        for j in range(i + 1):
-            if j == 0 or i == j:
-                temp.append(1)
-            else:
-                temp.append(result[i-1][j-1] + result[i-1][j])
-        result.append(temp)
+    for i in range(n):
+        result.append([1 if j == 0 or i == j else result[i-1][j-1] + result[i-1][j] for j in range(i + 1)])
     return result
 
-n = 5
+n = 4
 print(solution(n))
