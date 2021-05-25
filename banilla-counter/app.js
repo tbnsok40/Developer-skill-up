@@ -1,3 +1,4 @@
+
 let undoButton = document.getElementById("undoButton");
 let addButton = document.getElementById("addButton");
 let subButton = document.getElementById("subButton");
@@ -10,65 +11,63 @@ let undoStack = [];
 let redoStack = [];
 
 const checkValidity = () => {
-  if (!inputBox.value || isNaN(inputBox.value)) {
-    alert("숫자만 입력 가능합니다");
-    return false;
-  } else {
-    return true;
-  }
+    if (!inputBox.value || isNaN(inputBox.value)) {
+        alert("숫자만 입력 가능합니다");
+        return false;
+    } else {
+        redoStack = [];
+        redoButton.disabled = true;
+        return true;
+    }
+};
+const setValueBox = (num) => {
+    valueBox.innerText = num;
+};
+const handlePlus = () => {
+    if (checkValidity()) {
+        setValueBox(parseInt(valueBox.innerText) + parseInt(inputBox.value))
+        undoStack.push(valueBox.innerText);
+        checkUndo(undoStack)
+    }
+    inputBox.value = "";
 };
 
-const handlePlus = (event) => {
-  if (checkValidity()) {
-    formerValue = parseInt(valueBox.innerText);
-    formerInput = parseInt(inputBox.value);
-
-    valueBox.innerText = formerValue + parseInt(inputBox.value);
-    undoStack.push(valueBox.innerText);
-    redoStack = [];
-
-    redoButton.disabled = true;
-    undoButton.disabled = false;
-  }
-  inputBox.value = "";
-};
-
-const handleMinus = (event) => {
-  if (checkValidity()) {
-    formerValue = parseInt(valueBox.innerText);
-    formerInput = parseInt(inputBox.value);
-
-    valueBox.innerText = formerValue - parseInt(inputBox.value);
-    undoStack.push(valueBox.innerText);
-    redoStack = [];
-
-    redoButton.disabled = true;
-    undoButton.disabled = false;
-  }
-  inputBox.value = "";
+const handleMinus = () => {
+    if (checkValidity()) {
+        setValueBox(parseInt(valueBox.innerText) - parseInt(inputBox.value))
+        undoStack.push(valueBox.innerText);
+        checkUndo(undoStack)
+    }
+    inputBox.value = "";
 };
 
 const handleUndo = () => {
-  let formerNum = undoStack.pop();
-  redoStack.push(formerNum);
-  if (redoStack.length > 0) {
-    redoButton.disabled = false;
-  }
-  valueBox.innerText = undoStack[undoStack.length - 1];
-  console.log(undoStack, "1");
-  if (undoStack.length === 0) {
-    valueBox.innerText = 0;
-    undoButton.disabled = true;
-  }
+    let formerNum = undoStack.pop();
+    redoStack.push(formerNum)
+    checkRedo(redoStack)
+    checkUndo(undoStack);
+};
+
+const checkRedo = (redoStack) => {
+    redoButton.disabled = redoStack.length <= 0;
+};
+
+const checkUndo = (undoStack) => {
+    if (undoStack.length === 0) {
+        valueBox.innerText = 0;
+        undoButton.disabled = true;
+    } else {
+        undoButton.disabled = false;
+        setValueBox(undoStack[undoStack.length - 1])
+    }
 };
 
 const handleRedo = () => {
-  console.log(redoStack, ": 1");
-  let formerNum = redoStack.pop();
-  valueBox.innerText = formerNum;
-  if (redoStack.length === 0) {
-    redoButton.disabled = true;
-  }
+    let formerNum = redoStack.pop();
+    undoStack.push(formerNum)
+    checkUndo(undoStack)
+    setValueBox(formerNum)
+    checkRedo(redoStack);
 };
 
 addButton.onclick = handlePlus;
