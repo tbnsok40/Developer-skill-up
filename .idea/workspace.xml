@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d70fe1fa-e759-437c-a0c2-6ab2a070b53a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dev skillup.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dev skillup.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/banilla-counter/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/banilla-counter/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/memo.md" beforeDir="false" afterPath="$PROJECT_DIR$/memo.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +57,7 @@
       <updated>1621851272490</updated>
       <workItem from="1621851273617" duration="2553000" />
       <workItem from="1621903306063" duration="88000" />
-      <workItem from="1621903418850" duration="3970000" />
+      <workItem from="1621903418850" duration="4605000" />
     </task>
     <servers />
   </component>

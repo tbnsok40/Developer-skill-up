@@ -24,13 +24,17 @@ const setValueBox = (num) => {
     valueBox.innerText = num;
 };
 
+const initInputBox = () => {
+    inputBox.value = '';
+};
+
 const handlePlus = () => {
     if (checkValidity()) {
         setValueBox(parseInt(valueBox.innerText) + parseInt(inputBox.value));
         stackPush(undoStack, valueBox.innerText);
         checkUndo(undoStack);
     }
-    inputBox.value = "";
+    initInputBox();
 };
 
 const handleMinus = () => {
@@ -39,7 +43,7 @@ const handleMinus = () => {
         stackPush(undoStack, valueBox.innerText)
         checkUndo(undoStack)
     }
-    inputBox.value = "";
+    initInputBox();
 };
 
 const stackPush = (stack, num) => {
