@@ -79,7 +79,6 @@ const checkRedo = () => {
     redoButton.disabled = redoStack.length <= 0;
 };
 
-
 addButton.onclick = handlePlus;
 subButton.onclick = handleMinus;
 undoButton.onclick = handleUndo;

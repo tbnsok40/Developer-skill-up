@@ -31,16 +31,10 @@ const Button = ({currVal: {currVal, undo, redo}, calcNumber, setUndo, getNumber,
             } else {
                 num = currVal - parseInt(number)
             }
-
-            // tempArray.push(num)
-            // console.log(tempArray)
-
             calcNumber(num)
             setUndo(num)
-
             setNumber('')
         }
-
         checkUndo();
     }
 
@@ -55,8 +49,6 @@ const Button = ({currVal: {currVal, undo, redo}, calcNumber, setUndo, getNumber,
 
     const handleUndo = (e) => {
         let temp = [...undo]; // for deep copy
-        // console.log('! ',temp.pop())
-        // console.log(undo)
         popUndo();
         let num = temp.pop()
         setRedo(num)
@@ -66,15 +58,6 @@ const Button = ({currVal: {currVal, undo, redo}, calcNumber, setUndo, getNumber,
         } else {
             setStatus(true)
         }
-        // let tempUndo = undo;
-        // let popNum = tempUndo.pop()
-        // // setUndo()
-        // popUndo();
-        // if (undo.length > 0) {
-        //     setStatus(false);
-        // }else if (undo.length === 0) {
-        //     setStatus(true);
-        // }
     }
 
     // redo 한번 클릭하면 redo pop하면서 currVal 바구고, 다시 undo에 push
