@@ -9,3 +9,5 @@
 - isNan, parseInt()
 
 - 코드 리뷰 => prototype
+
+- deep copy
