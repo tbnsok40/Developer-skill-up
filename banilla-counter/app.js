@@ -1,4 +1,3 @@
-
 let undoButton = document.getElementById("undoButton");
 let addButton = document.getElementById("addButton");
 let subButton = document.getElementById("subButton");
@@ -24,11 +23,12 @@ const checkValidity = () => {
 const setValueBox = (num) => {
     valueBox.innerText = num;
 };
+
 const handlePlus = () => {
     if (checkValidity()) {
-        setValueBox(parseInt(valueBox.innerText) + parseInt(inputBox.value))
-        undoStack.push(valueBox.innerText);
-        checkUndo(undoStack)
+        setValueBox(parseInt(valueBox.innerText) + parseInt(inputBox.value));
+        stackPush(undoStack, valueBox.innerText);
+        checkUndo(undoStack);
     }
     inputBox.value = "";
 };
@@ -36,21 +36,21 @@ const handlePlus = () => {
 const handleMinus = () => {
     if (checkValidity()) {
         setValueBox(parseInt(valueBox.innerText) - parseInt(inputBox.value))
-        undoStack.push(valueBox.innerText);
+        stackPush(undoStack, valueBox.innerText)
         checkUndo(undoStack)
     }
     inputBox.value = "";
 };
 
+const stackPush = (stack, num) => {
+    stack.push(num)
+}
+
 const handleUndo = () => {
     let formerNum = undoStack.pop();
-    redoStack.push(formerNum)
+    stackPush(redoStack, formerNum)
     checkRedo()
     checkUndo(undoStack);
-};
-
-const checkRedo = () => {
-    redoButton.disabled = redoStack.length <= 0;
 };
 
 const checkUndo = (undoStack) => {
@@ -65,11 +65,16 @@ const checkUndo = (undoStack) => {
 
 const handleRedo = () => {
     let formerNum = redoStack.pop();
-    undoStack.push(formerNum)
+    stackPush(undoStack, formerNum)
     checkUndo(undoStack)
     setValueBox(formerNum)
     checkRedo();
 };
+
+const checkRedo = () => {
+    redoButton.disabled = redoStack.length <= 0;
+};
+
 
 addButton.onclick = handlePlus;
 subButton.onclick = handleMinus;
