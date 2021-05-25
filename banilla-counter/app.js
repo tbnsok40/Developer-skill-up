@@ -20,6 +20,7 @@ const checkValidity = () => {
         return true;
     }
 };
+
 const setValueBox = (num) => {
     valueBox.innerText = num;
 };
@@ -44,11 +45,11 @@ const handleMinus = () => {
 const handleUndo = () => {
     let formerNum = undoStack.pop();
     redoStack.push(formerNum)
-    checkRedo(redoStack)
+    checkRedo()
     checkUndo(undoStack);
 };
 
-const checkRedo = (redoStack) => {
+const checkRedo = () => {
     redoButton.disabled = redoStack.length <= 0;
 };
 
@@ -67,7 +68,7 @@ const handleRedo = () => {
     undoStack.push(formerNum)
     checkUndo(undoStack)
     setValueBox(formerNum)
-    checkRedo(redoStack);
+    checkRedo();
 };
 
 addButton.onclick = handlePlus;
