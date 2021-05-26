@@ -2,47 +2,24 @@ import React, {useEffect} from 'react';
 import {connect} from "react-redux";
 import {clickedDocs} from "../../../actions/docsActions";
 
-const displayStyle = {
-    width: "400px",
-    borderRadius: "7px",
-    padding: "10px 15px 0 25px",
-    height: "640px",
-}
-
-
 const Paper = ({click}) => {
     useEffect(() => {
     }, [])
     return (
+        <div className="col right">
+            <div className="details">
+                {
+                    click &&
+                    (<ul className="info" key={click.id}>
+                        <li>이름: {click.name} {click.first}</li>
+                        <li>휴대폰: {click.phone}</li>
+                        <li>SNS: {click.sns}</li>
+                        <li>주소: {click.address}</li>
+                    </ul>)}
+                {click &&
+                <p className="emptyset">{click.intro}</p>}
 
-        <div style={displayStyle} className="card">
-            {click &&
-            (<table>
-                    <tbody>
-                    <tr>
-                        <td style={{textAlign: "center"}}><h2>{click.name}</h2></td>
-                    </tr>
-                    <tr>
-                        <td>Family Name : {click.name}</td>
-                    </tr>
-                    <tr>
-                        <td>First Name: {click.first}</td>
-                    </tr>
-                    <tr>
-                        <td>Phone : {click.phone}</td>
-                    </tr>
-                    <tr>
-                        <td>SNS : {click.sns}</td>
-                    </tr>
-                    <tr>
-                        <td>Address: {click.address}</td>
-                    </tr>
-                    <tr>
-                        <td>Intro: {click.intro}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            )}
+            </div>
         </div>
     )
 }
