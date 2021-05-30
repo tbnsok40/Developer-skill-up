@@ -35,5 +35,3 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, {getDocs, clickedDocs})(Formats);
-
-
