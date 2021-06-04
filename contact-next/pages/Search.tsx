@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import contacts from '../contacts.json';
-import {useRecoilState} from "recoil";
+import {useRecoilState, useSetRecoilState} from "recoil";
 import {currentState, index, initList} from "./contacts";
 
 
@@ -15,8 +15,8 @@ export interface IContacts {
 const Search = () => {
 
     const [data, setData] = useRecoilState<IContacts[]>(initList);
-    const [select, setSelect] = useRecoilState<number>(index);
-    const [inputState, setInputState] = useRecoilState<boolean>(currentState);
+    const setSelect = useSetRecoilState<number>(index);
+    const setInputState = useSetRecoilState<boolean>(currentState);
 
     const textRef = useRef<HTMLInputElement>(null);
 
@@ -41,8 +41,7 @@ const Search = () => {
                        className="inp-sch"
                        ref={textRef}
                        placeholder="검색어를 입력하세요."
-                       onChange={onInput}
-                />
+                       onChange={onInput}/>
             </div>
     )
 }

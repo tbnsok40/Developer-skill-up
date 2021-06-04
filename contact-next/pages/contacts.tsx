@@ -1,7 +1,9 @@
-import React, {useRef} from 'react';
-import contacts from '../contacts.json';
+import
+    React, {Fragment, useRef} from 'react';
+// import contacts from '../contacts.json';
 import {atom, selector, useRecoilState, useRecoilValue} from "recoil";
 import Search from "./Search";
+import contacts from "../contacts";
 
 
 export interface IContacts {
@@ -40,17 +42,21 @@ const Contacts = () => {
     const data = useRecoilValue(showingContacts);
     const [select, setSelect] = useRecoilState<number>(index);
     const [inputState, setInputState] = useRecoilState<boolean>(currentState);
+    const newData = useRecoilValue(initList)
 
-
-    const selectContact = (id: number):void => {setSelect(id)}
+    const selectContact = (id: number):void => {
+        setSelect(id)
+        console.log(id)
+    }
 
     return (
+        <Fragment>
             <div className="col left">
                 <Search/>
                 {/*<ContactList/> refactoring with Using Selector */}
                 < div className="contact-list">
                     <ul>
-                        {!inputState && contacts.map((contact, id) => {
+                        {!inputState && newData.map((contact, id) => {
                             return (
                                 <li key={id}>
                                     <button type="button"
@@ -72,6 +78,7 @@ const Contacts = () => {
                     </ul>
                 </div>
             </div>
+        </Fragment>
     )
 }
 
