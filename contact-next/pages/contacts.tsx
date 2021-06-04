@@ -1,9 +1,10 @@
-import React, {useState, useRef} from 'react';
+import React, {useRef} from 'react';
 import contacts from '../contacts.json';
-import Detail from "./detail";
+import {atom, selector, useRecoilState, useRecoilValue} from "recoil";
+import Search from "./Search";
 
 
-interface Contacts {
+export interface IContacts {
     id: number,
     name: string,
     phone: string,
@@ -11,48 +12,47 @@ interface Contacts {
     sns?: string
 }
 
+export const initList = atom<IContacts[]>({
+    key: 'defaultList',
+    default: contacts
+})
+
+// useRecoilState 의 인자는 atom 과 selector 만 가능하다.
+export const currentState = atom<boolean>({
+    key: 'currentState',
+    default: false
+})
+
+export const index = atom<number>({
+    key: 'index',
+    default: -1
+})
+
+const showingContacts = selector({
+    key: 'data',
+    get: ({get}) => {
+        return get(initList);
+    }
+})
 
 const Contacts = () => {
-    const [select, setSelect] = useState<number>();
-    const [inputState, setInputState] = useState<boolean>(false);
-    const [data, setData] = useState<Contacts []>(contacts);
-    const textRef = useRef<HTMLInputElement>(null);
+
+    const data = useRecoilValue(showingContacts);
+    const [select, setSelect] = useRecoilState<number>(index);
+    const [inputState, setInputState] = useRecoilState<boolean>(currentState);
+
 
     const selectContact = (id: number):void => {setSelect(id)}
 
-    const onInput = ():void => {
-        // @ts-ignore
-        if (!textRef.current.value) {
-            setInputState(false);
-            setData(contacts)
-            setSelect(-1)
-        } else {
-            // @ts-ignore
-            let currentInput = textRef.current.value.toLowerCase();
-            setInputState(true);
-            let tempData = data.filter(d => d.name.toLowerCase().indexOf(currentInput) > -1);
-            if (tempData.length === 0) {
-                setSelect(-1)
-            }
-            setData(tempData)
-        }
-    }
     return (
-        <div className="contact-wrap">
             <div className="col left">
-                <div className="search-box">
-                    <input type="text"
-                           className="inp-sch"
-                           ref={textRef}
-                           placeholder="검색어를 입력하세요."
-                           onChange={onInput}
-                    />
-                </div>
+                <Search/>
+                {/*<ContactList/> refactoring with Using Selector */}
                 < div className="contact-list">
                     <ul>
-                        {!inputState && contacts.map((contact, index) => {
+                        {!inputState && contacts.map((contact, id) => {
                             return (
-                                <li key={index}>
+                                <li key={id}>
                                     <button type="button"
                                             onClick={e => selectContact(contact.id)}>
                                         {contact.name}
@@ -60,9 +60,9 @@ const Contacts = () => {
                                 </li>
                             )
                         })}
-                        {inputState && data.map((contact, index) => {
+                        {inputState && data.map((contact, id) => {
                             return (
-                                <li key={index}>
+                                <li key={id}>
                                     <button type="button"
                                             onClick={e => selectContact(contact.id)}>
                                         {contact.name}
@@ -72,8 +72,6 @@ const Contacts = () => {
                     </ul>
                 </div>
             </div>
-            <Detail selected={select}/>
-        </div>
     )
 }
 

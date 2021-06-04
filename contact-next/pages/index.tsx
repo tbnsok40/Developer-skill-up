@@ -1,18 +1,10 @@
-import Contacts from "./contacts";
+// import Contacts from "./contacts";
 import {
     RecoilRoot,
-    atom, selector, useRecoilState, useRecoilValue
 } from "recoil";
-import contacts from '../contacts.json';
-
-
-// interface Icontacts {
-//     id: number,
-//     name: string,
-//     phone: string,
-//     address: string,
-//     sns?: string
-// }
+import React from "react";
+import Detail from "./detail";
+import Contacts from "./contacts";
 
 
 export default function Home() {
@@ -20,8 +12,9 @@ export default function Home() {
         <RecoilRoot>
             <div className="container">
                 <h1 className="subject">Phone Book</h1>
-                <div>
+                <div className="contact-wrap">
                     <Contacts/>
+                    <Detail/>
                 </div>
             </div>
         </RecoilRoot>
