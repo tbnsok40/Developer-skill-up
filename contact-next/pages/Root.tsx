@@ -5,6 +5,7 @@ import {
 import React from "react";
 import Detail from "./detail";
 import Contacts from "./contacts";
+import datass from "../contacts";
 
 export const DetailState = atom<boolean>({
     key: 'DetailState',

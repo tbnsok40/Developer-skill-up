@@ -1,5 +1,4 @@
-import
-    React, {Fragment, useRef} from 'react';
+import React, {Fragment, useRef} from 'react';
 // import contacts from '../contacts.json';
 import {atom, selector, useRecoilState, useRecoilValue} from "recoil";
 import Search from "./Search";
@@ -42,29 +41,47 @@ const Contacts = () => {
     const data = useRecoilValue(showingContacts);
     const [select, setSelect] = useRecoilState<number>(index);
     const [inputState, setInputState] = useRecoilState<boolean>(currentState);
-    const newData = useRecoilValue(initList)
+    // const newData = useRecoilValue(initList)
+    const [newData, setNewData] = useRecoilState(initList)
 
     const selectContact = (id: number):void => {
-        setSelect(id)
         console.log(id)
+        setSelect(id)
+    }
+
+    const onDelete = (id) => {
+        let tempData = [...newData];
+        let temp = tempData.filter(data => data.id !== id);
+        setNewData(temp);
     }
 
     return (
         <Fragment>
             <div className="col left">
                 <Search/>
-                {/*<ContactList/> refactoring with Using Selector */}
                 < div className="contact-list">
                     <ul>
-                        {!inputState && newData.map((contact, id) => {
+                        {!inputState && newData.map((contact, idx) => {
                             return (
-                                <li key={id}>
+                                <li key={idx} style={{"display": "flex"}}>
                                     <button type="button"
-                                            onClick={e => selectContact(contact.id)}>
+                                            onClick={e => selectContact(idx)}>
                                         {contact.name}
+
+                                    </button>
+                                    <button
+                                        onClick={e => onDelete(contact.id)}
+                                        style={{"width": "50px", "background": "gray",
+                                        "opacity":"50%" }}>
+                                        Edit
+                                    </button>
+                                    <button
+                                        onClick={e => onDelete(contact.id)}
+                                        style={{"width": "50px", "background": "gray"}}>
+                                        X
                                     </button>
                                 </li>
-                            )
+                            );
                         })}
                         {inputState && data.map((contact, id) => {
                             return (
