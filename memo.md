@@ -78,3 +78,34 @@ gi- 결국 useState()로 만들 값들은 dom에 바인딩할 값으로 한정�
 
 - Next.js 는 리액트와 함께 가는 라이브러리 이다. => 쥰내 빠르다. 
 
+- typeorm: 속도가 잘짠 쿼리보다 못할 수 있는 단점이 있다.
+- typescript setting -> 책임님 readme.md
+
+- compile error, runtime error,
+- phonebook : convert to TS
+
+- recoil 을 사용하면 React.memo를 사용하지 않아도 돤다.
+- recoil 로 관리 되는 데이터에 한해서는 memo 를 사용하지 않아도 된다.
+
+
+- interface 와 타입 중 하나를 고려해야할 때, 인터페이스를 우선 사용하기로 한다. 
+- 인터페이스 명명은 I를 접두로 붙여준다.
+- React.FC 사용하지 않는다.
+
+- Recoil: 비동기이기 때문에 , setState 과정을 연속으로 사용해도 비동기 처리되어 한번만 렌더링 된다.
+
+- 어느 영역까지 리코일로 처리할 것인지는 추후 논의한다. useState 와 recoil 함께 사용.
+
+- Next.js -> server side rendering 을 위해 사용한다 ==|> ssr 을 지원하는 프레임워크: next 에 맞는 규칙에 맞게끔 강제해야한다.
+- SSR, 엘리누나 ssr, csr 강의듣기 ㅠ
+
+- typescript 기반, recoil, next.js 기반 =>  배포까지 + create/delete 까지 
+
+- page에는 루트 만 넣을 것, 컴포넌트를 넣는 것 아니다 => components  
+- next 와 react 가 공존하는 것.
+  
+- 흰화면과, 데이터가 없는 빈화면은 다르다. 
+- .build  대신  .next
+- netlify 에 next add on ㅡ을 깔아야해
+- plugin tab 에서 nest.js cache 와 그 밑에 것을 인스톨(2개) => 그러고 디플로이.
+- next 를 사용하는 것이 맞는데, 하다가 안될 수 도 있다.
