@@ -87,7 +87,7 @@ const Contacts = () => {
                             return (
                                 <li key={idx} style={{"display": "flex"}}>
                                     <button type="button"
-                                            // onClick={e => selectContact(contact.id)}>
+                                            // onClick={e => selectContact(contact-recoil.id)}>
                                             onClick={e => setSelect(contact.id)}>
                                         {contact.name}
 
@@ -99,7 +99,7 @@ const Contacts = () => {
                                         Edit
                                     </button>
                                     <button
-                                        // onClick={e => deleteData(contact.id)}
+                                        // onClick={e => deleteData(contact-recoil.id)}
                                         onClick={e => onDelete(contact.id)}
                                         style={{"width": "50px", "background": "gray"}}>
                                         X
