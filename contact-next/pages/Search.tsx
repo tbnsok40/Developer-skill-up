@@ -1,23 +1,14 @@
 import React, {useRef} from 'react';
 import contacts from '../contacts.json';
 import {useRecoilState, useSetRecoilState} from "recoil";
-import {currentState, index, initList} from "./contacts";
+import {currentState, IContacts, index, initList} from "./contacts";
 
-
-export interface IContacts {
-    id: number,
-    name: string,
-    phone: string,
-    address: string,
-    sns?: string
-}
 
 const Search = () => {
 
     const [data, setData] = useRecoilState<IContacts[]>(initList);
     const setSelect = useSetRecoilState<number>(index);
     const setInputState = useSetRecoilState<boolean>(currentState);
-
     const textRef = useRef<HTMLInputElement>(null);
 
     const onInput = ():void => {

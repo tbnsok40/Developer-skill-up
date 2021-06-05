@@ -1,11 +1,9 @@
 import {
-    atom,
-    RecoilRoot, useRecoilValue, useSetRecoilState,
+    atom, useRecoilState, useRecoilValue, useSetRecoilState,
 } from "recoil";
 import React from "react";
 import Detail from "./detail";
 import Contacts from "./contacts";
-import datass from "../contacts";
 
 export const DetailState = atom<boolean>({
     key: 'DetailState',
@@ -13,17 +11,12 @@ export const DetailState = atom<boolean>({
 })
 
 
-// 추가 버튼 -> detail state 변경해야한다.
-// 다른 컴포넌트로 보내야함 : recoil 사용해야한다.
-
 const Root = () => {
 
-    const setDetailState = useSetRecoilState(DetailState);
-    const detailState = useRecoilValue<boolean>(DetailState);
+    const [detailState, setDetailState] = useRecoilState<boolean>(DetailState);
 
     const onAdd = () => {
         setDetailState(!detailState)
-        // console.log(detailState);
     }
 
     return (

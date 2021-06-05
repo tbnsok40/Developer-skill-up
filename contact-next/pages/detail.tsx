@@ -1,23 +1,39 @@
 import React, {useEffect, useState} from 'react';
 import contacts from '../contacts.json';
-import {index, IContacts, initList} from "./contacts";
-import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import {index, IContacts, initList, UpdateAtom} from "./contacts";
+import {atom, useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import {DetailState} from "./Root";
 
+
+
+const individualData = atom<IContacts>({
+    key: 'individualData',
+    default: null
+})
 
 const Detail = () => {
     const [detailState, setDetailState] = useRecoilState<boolean>(DetailState);
 
     const currentIndex = useRecoilValue<number>(index)
     const newData = useRecoilValue(initList)
-    const data: IContacts = newData[currentIndex];
-    console.log(data, newData, currentIndex, '----')
+
+    let temp = newData.filter(data => data.id === currentIndex);
+    let data:IContacts = temp[0];
+    const [udData, setUdData] = useRecoilState(individualData);
+
+
+    const [individual, setIndividual] = useRecoilState(individualData);
     const [input, setInput] = useState<IContacts>({
         id: null, name: '', phone: '', sns: '', address: ''
     });
+
     const {name, phone, sns, address} = input;
+
     const setData = useSetRecoilState(initList);
     const List = useRecoilValue(initList);
+    const updateState = useRecoilValue(UpdateAtom);
+
+
 
     const getId = (List) => {
         return List.length;
@@ -41,18 +57,27 @@ const Detail = () => {
             id: null, name: '', phone: '', sns: '', address: ''
         });
     }
+    const onUpdate = (e) => {
+        const {value, name} = e.target;
+    }
+    const updateItem = () => {
+
+    }
 
     const onChange = (e) => {
         const {value, name} = e.target;
+        console.log(input)
         setInput({
             ...input,
             [name]: value
         })
-    }
+    };
+
+
 
     return (
         <div className="col right">
-            {!detailState &&
+            {!detailState && !updateState &&
             <div className="details">
                 {data &&
                 <ul className="info" key={data.id}>
@@ -75,11 +100,11 @@ const Detail = () => {
             {/*{updateState &&*/}
             {/*<div className="details">*/}
             {/*    <ul className="info">*/}
-            {/*        <li>이름: <input type="text" name='name' value={name} onChange={onChange}/></li>*/}
-            {/*        <li>휴대폰: <input type="text" name='phone' value={phone} onChange={onChange}/></li>*/}
-            {/*        <li>SNS: <input type="text" name='sns' value={sns} onChange={onChange}/></li>*/}
-            {/*        <li>주소: <input type="text" name='address' value={address} onChange={onChange}/></li>*/}
-            {/*        <button onClick={addItem}>완료</button>*/}
+            {/*        <li>이름: <input type="text" name='name' value={UpdateName} onChange={onUpdate}/></li>*/}
+            {/*        <li>휴대폰: <input type="text" name='phone' value={UpdatePhone} onChange={onUpdate}/></li>*/}
+            {/*        <li>SNS: <input type="text" name='sns' value={UpdateSns} onChange={onUpdate}/></li>*/}
+            {/*        <li>주소: <input type="text" name='address' value={UpdateAddress} onChange={onUpdate}/></li>*/}
+            {/*        <button onClick={updateItem}>수정 완료</button>*/}
             {/*    </ul>*/}
             {/*</div>}*/}
         </div>
