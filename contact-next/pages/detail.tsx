@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import contacts from '../contacts.json';
-import {index, IContacts, initList, UpdateAtom} from "./contacts";
+import {IContacts} from "./contacts";
 import {atom, useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import {DetailState} from "./Root";
+import {index, initList, UpdateAtom} from "./atom";
 
 
 
@@ -32,7 +33,6 @@ const Detail = () => {
     const setData = useSetRecoilState(initList);
     const List = useRecoilValue(initList);
     const updateState = useRecoilValue(UpdateAtom);
-
 
 
     const getId = (List) => {

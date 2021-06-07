@@ -2,6 +2,7 @@ import React, {Fragment} from 'react';
 import {atom, selector, useRecoilState, useRecoilValue} from "recoil";
 import Search from "./Search";
 import contacts from "../contacts";
+import {currentState, index, initList, UpdateAtom} from "./atom";
 
 export interface IContacts {
     id: number,
@@ -11,52 +12,12 @@ export interface IContacts {
     sns?: string
 }
 
-// 초기 배열 / 전체 배열
-export const initList = atom<IContacts[]>({
-    key: 'defaultList',
-    default: contacts
-})
-
-// useRecoilState 의 인자는 atom 과 selector 만 가능하다.
-export const currentState = atom<boolean>({
-    key: 'currentState',
-    default: false
-})
-
-
-export const index = atom<number>({
-    key: 'index',
-    default: -1
-})
-
-
-// const showingContacts = selector({
-//     key: 'data',
-//     get: ({get}) => {
-//         return get(initList);
-//     }
-// })
-
-
-
-export const UpdateAtom = atom({
-    key: 'UpdateAtom',
-    default: false
-})
 const Contacts = () => {
 
     const data = useRecoilValue(initList);
     const [select, setSelect] = useRecoilState<number>(index);
     const [inputState, setInputState] = useRecoilState<boolean>(currentState);
     const [newData, setNewData] = useRecoilState(initList)
-
-    // const deleteData = (id) = selector({
-    //     key: 'deleteData',
-    //     get: ({get}) => {
-    //         const beforeFiltered = get(initList);
-    //         beforeFiltered.filter(data => data.id !== id);
-    //     }
-    // });
 
     const selectContact = (id: number):void => {
         console.log(id)
@@ -66,9 +27,17 @@ const Contacts = () => {
 
     const onDelete = (id) => {
         let tempData = [...newData];
-        let temp = tempData.filter(data => data.id !== id);
-        setNewData(temp);
+        tempData = tempData.filter(data => data.id !== id);
+        setNewData(tempData);
     }
+
+    // const deleteData = (id) = selector({
+    //     key: 'deleteData',
+    //     get: ({get}) => {
+    //         const beforeFiltered = get(initList);
+    //         beforeFiltered.filter(data => data.id !== id);
+    //     }
+    // });
 
     const [updateState, setUpdateState] = useRecoilState(UpdateAtom);
 
@@ -87,7 +56,7 @@ const Contacts = () => {
                             return (
                                 <li key={idx} style={{"display": "flex"}}>
                                     <button type="button"
-                                            // onClick={e => selectContact(contact-recoil.id)}>
+                                            // onClick={e => selectContact(contact.id)}>
                                             onClick={e => setSelect(contact.id)}>
                                         {contact.name}
 
@@ -99,7 +68,7 @@ const Contacts = () => {
                                         Edit
                                     </button>
                                     <button
-                                        // onClick={e => deleteData(contact-recoil.id)}
+                                        // onClick={e => deleteData(contact.id)}
                                         onClick={e => onDelete(contact.id)}
                                         style={{"width": "50px", "background": "gray"}}>
                                         X

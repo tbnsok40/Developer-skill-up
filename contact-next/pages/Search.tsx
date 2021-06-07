@@ -1,7 +1,8 @@
 import React, {useRef} from 'react';
 import contacts from '../contacts.json';
 import {useRecoilState, useSetRecoilState} from "recoil";
-import {currentState, IContacts, index, initList} from "./contacts";
+import {IContacts} from "./contacts";
+import {currentState, index, initList} from "./atom";
 
 
 const Search = () => {
