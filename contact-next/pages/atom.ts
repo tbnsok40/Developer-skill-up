@@ -23,6 +23,10 @@ export const index = atom<number>({
     default: -1
 })
 
+export const DetailState = atom<boolean>({
+    key: 'DetailState',
+    default: false
+})
 // const showingContacts = selector({
 //     key: 'data',
 //     get: ({get}) => {

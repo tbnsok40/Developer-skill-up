@@ -1,7 +1,6 @@
 import React, {Fragment} from 'react';
-import {atom, selector, useRecoilState, useRecoilValue} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 import Search from "./Search";
-import contacts from "../contacts";
 import {actionState, currentState, index, initList, UpdateAtom} from "./atom";
 
 export interface IContacts {
@@ -63,8 +62,8 @@ const Contacts = () => {
                             return (
                                 <li key={idx} style={{"display": "flex"}}>
                                     <button type="button"
-                                        // onClick={e => selectContact(contact.id)}>
-                                            onClick={e => setSelect(contact.id)}>
+                                        onClick={e => selectContact(contact.id)}>
+                                            {/*onClick={e => setSelect(contact.id)}>*/}
                                         {contact.name}
 
                                     </button>

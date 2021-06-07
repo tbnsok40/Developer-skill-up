@@ -1,22 +1,17 @@
 import {
-    atom, useRecoilState, useRecoilValue, useSetRecoilState,
+    useRecoilState, useSetRecoilState
 } from "recoil";
 import React from "react";
 import Detail from "./detail";
 import Contacts from "./contacts";
-
-export const DetailState = atom<boolean>({
-    key: 'DetailState',
-    default: false
-})
-
+import {DetailState} from "./atom";
 
 const Root = () => {
 
-    const [detailState, setDetailState] = useRecoilState<boolean>(DetailState);
+    const setDetailState = useSetRecoilState<boolean>(DetailState);
 
     const onAdd = () => {
-        setDetailState(!detailState)
+        setDetailState(true)
     }
 
     return (

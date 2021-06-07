@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import contacts from '../contacts.json';
 import {IContacts} from "./contacts";
 import {atom, useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
-import {DetailState} from "./Root";
+import {DetailState} from "./atom";
 import {index, initList, UpdateAtom} from "./atom";
 
 
@@ -20,10 +20,8 @@ const Detail = () => {
 
     let temp = newData.filter(data => data.id === currentIndex);
     let data:IContacts = temp[0];
-    const [udData, setUdData] = useRecoilState(individualData);
-
-
-    const [individual, setIndividual] = useRecoilState(individualData);
+    // const [udData, setUdData] = useRecoilState(individualData);
+    // const [individual, setIndividual] = useRecoilState(individualData);
     const [input, setInput] = useState<IContacts>({
         id: null, name: '', phone: '', sns: '', address: ''
     });
@@ -34,9 +32,8 @@ const Detail = () => {
     const List = useRecoilValue(initList);
     const updateState = useRecoilValue(UpdateAtom);
 
-
     const getId = (List) => {
-        return List.length;
+        return List[List.length - 1].id + 1;
     }
 
     const addItem = () => {
@@ -57,12 +54,12 @@ const Detail = () => {
             id: null, name: '', phone: '', sns: '', address: ''
         });
     }
-    const onUpdate = (e) => {
-        const {value, name} = e.target;
-    }
-    const updateItem = () => {
-
-    }
+    // const onUpdate = (e) => {
+    //     const {value, name} = e.target;
+    // }
+    // const updateItem = () => {
+    //
+    // }
 
     const onChange = (e) => {
         const {value, name} = e.target;
