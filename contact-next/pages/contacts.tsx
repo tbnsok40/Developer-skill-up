@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import {atom, selector, useRecoilState, useRecoilValue} from "recoil";
 import Search from "./Search";
 import contacts from "../contacts";
-import {currentState, index, initList, UpdateAtom} from "./atom";
+import {actionState, currentState, index, initList, UpdateAtom} from "./atom";
 
 export interface IContacts {
     id: number,
@@ -18,28 +18,35 @@ const Contacts = () => {
     const [select, setSelect] = useRecoilState<number>(index);
     const [inputState, setInputState] = useRecoilState<boolean>(currentState);
     const [newData, setNewData] = useRecoilState(initList)
+    const [updateState, setUpdateState] = useRecoilState(UpdateAtom);
+    const [currState, setCurrState] = useRecoilState(actionState);
 
-    const selectContact = (id: number):void => {
+    const selectContact = (id: number): void => {
         console.log(id)
         setSelect(id)
         setUpdateState(false)
     }
 
     const onDelete = (id) => {
+        setCurrState('delete');
         let tempData = [...newData];
         tempData = tempData.filter(data => data.id !== id);
         setNewData(tempData);
     }
 
-    // const deleteData = (id) = selector({
-    //     key: 'deleteData',
+
+    // const handleData = selector({
+    //     key: 'handleData',
     //     get: ({get}) => {
-    //         const beforeFiltered = get(initList);
-    //         beforeFiltered.filter(data => data.id !== id);
+    //
+    //         const State = get(actionState);
+    //         switch (State) {
+    //             case 'delete':
+    //                 return beforeFiltered.filter(data => data.id !== id);
+    //         }
     //     }
     // });
 
-    const [updateState, setUpdateState] = useRecoilState(UpdateAtom);
 
     const onUpdate = (id) => {
         setSelect(id)
@@ -56,15 +63,17 @@ const Contacts = () => {
                             return (
                                 <li key={idx} style={{"display": "flex"}}>
                                     <button type="button"
-                                            // onClick={e => selectContact(contact.id)}>
+                                        // onClick={e => selectContact(contact.id)}>
                                             onClick={e => setSelect(contact.id)}>
                                         {contact.name}
 
                                     </button>
                                     <button
                                         onClick={e => onUpdate(contact.id)}
-                                        style={{"width": "50px", "background": "gray",
-                                        "opacity":"50%" }}>
+                                        style={{
+                                            "width": "50px", "background": "gray",
+                                            "opacity": "50%"
+                                        }}>
                                         Edit
                                     </button>
                                     <button

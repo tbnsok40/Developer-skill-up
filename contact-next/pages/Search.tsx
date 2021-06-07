@@ -7,7 +7,7 @@ import {currentState, index, initList} from "./atom";
 
 const Search = () => {
 
-    const [data, setData] = useRecoilState<IContacts[]>(initList);
+    const [contactList, setContactList] = useRecoilState<IContacts[]>(initList);
     const setSelect = useSetRecoilState<number>(index);
     const setInputState = useSetRecoilState<boolean>(currentState);
     const textRef = useRef<HTMLInputElement>(null);
@@ -15,16 +15,16 @@ const Search = () => {
     const onInput = ():void => {
         if (!textRef.current.value) {
             setInputState(false);
-            setData(contacts)
+            setContactList(contacts)
             setSelect(-1)
         } else {
-            let currentInput = textRef.current.value.toLowerCase();
             setInputState(true);
-            let tempData = data.filter(d => d.name.toLowerCase().indexOf(currentInput) > -1);
+            let currentInput = textRef.current.value.toLowerCase();
+            let tempData = contactList.filter(d => d.name.toLowerCase().indexOf(currentInput) > -1);
             if (tempData.length === 0) {
                 setSelect(-1)
             }
-            setData(tempData)
+            setContactList(tempData)
         }
     }
     return (

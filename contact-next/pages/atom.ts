@@ -1,5 +1,3 @@
-
-// 초기 배열 / 전체 배열
 import {atom} from "recoil";
 import contacts from "../contacts";
 import {IContacts} from "./contacts";
@@ -15,12 +13,15 @@ export const currentState = atom<boolean>({
     default: false
 })
 
+export const actionState = atom<string>({
+    key: 'actionState',
+    default: 'read'
+})
 
 export const index = atom<number>({
     key: 'index',
     default: -1
 })
-
 
 // const showingContacts = selector({
 //     key: 'data',
@@ -28,8 +29,6 @@ export const index = atom<number>({
 //         return get(initList);
 //     }
 // })
-
-
 
 export const UpdateAtom = atom({
     key: 'UpdateAtom',
