@@ -8,7 +8,7 @@ const UpdatePage = () => {
     const [lists, setLists] = useRecoilState(initList);
     const currentIndex = useRecoilValue<number>(index)
     const data: IContacts = lists.find(data => data.id === currentIndex);
-    const setPage = useSetRecoilState<string>(PageState);
+    const setPage = useResetRecoilState(PageState);
 
     const [input, setInput] = useState<IContacts>({
         id: data.id, name: data.name, phone: data.phone, sns: data.sns, address: data.address
@@ -32,8 +32,7 @@ const UpdatePage = () => {
     const updateItem = () => {
         const temp = lists.filter(list => list.id !== currentIndex);
         setLists([...temp, input])
-        setPage("DETAIL")
-
+        setPage()
     }
 
     return (
