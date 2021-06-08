@@ -1,15 +1,12 @@
-import React, {useRef} from 'react';
-import contacts from '../contacts.json';
-import {useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState} from "recoil";
-import {IContacts} from "./contacts";
-import {currentState, filterState, index, initList, searchedList, searchInputState, selectedContact} from "./atom";
+import React from 'react';
+import {useRecoilState, useResetRecoilState} from "recoil";
+import {searchInputState, selectedContact} from "./atom";
 
 
 const Search = () => {
 
     // const [contactList, setContactList] = useRecoilState<IContacts[]>(initList);
     // const setSearchList = useSetRecoilState<IContacts[]>(searchedList)
-
     // const setSelect = useSetRecoilState<number>(index);
     // const setInputState = useSetRecoilState<boolean>(currentState);
     // const textRef = useRef<HTMLInputElement>(null);

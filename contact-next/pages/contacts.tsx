@@ -1,7 +1,8 @@
 import React, {Fragment} from 'react';
-import {selector, useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import Search from "./Search";
-import {filteredState, filterState, index, initList, searchedList} from "./atom";
+import {filteredState, index, initList, PageState} from "./atom";
+import UpdatePage from "./Page/UpdatePage";
 
 export interface IContacts {
     id: number,
@@ -13,15 +14,14 @@ export interface IContacts {
 
 const Contacts = () => {
 
-    // const data = useRecoilValue(initList);
+
     const [newData, setNewData] = useRecoilState(initList)
     const setSelect = useSetRecoilState<number>(index);
-    // const inputState = useRecoilValue<boolean>(currentState);
-    // const [searchList, setSearchList] = useRecoilState<IContacts[]>(searchedList)
-
+    const setPage = useSetRecoilState<string>(PageState);
 
     const selectContact = (id: number): void => {
         setSelect(id)
+        setPage("DETAIL")
     }
 
     const onDelete = (id) => {
@@ -32,27 +32,9 @@ const Contacts = () => {
 
     const onUpdate = (id) => {
         setSelect(id)
+        setPage('UPDATE')
     }
 
-    // selector
-    // const filteredState = selector({
-    //     key: 'filteredState',
-    //     get: ({get}) => {
-    //         // const filter = 'All'
-    //         const filter = get(filterState); // 순환참조 원인, 'filteredState' selector 이름을 참조하고 있었음
-    //         const list = get(initList);
-    //         const search = get(searchedList);
-    //
-    //         switch (filter) {
-    //             case 'All':
-    //                 return list;
-    //
-    //             case 'SearchMode':
-    //                 return search;
-    //         }
-    //     }
-    // })
-    // const filteredData = useRecoilValue(filteredState);
     const filteredData = useRecoilValue(filteredState);
 
     return (

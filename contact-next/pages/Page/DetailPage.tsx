@@ -1,7 +1,7 @@
 import React from 'react';
-import {IContacts} from "./contacts";
+import {IContacts} from "../contacts";
 import {useRecoilValue} from "recoil";
-import {index, initList} from "./atom";
+import {index, initList} from "../atom";
 
 const DetailPage = () => {
     const lists = useRecoilValue(initList);

@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {IContacts} from "./contacts";
+import {IContacts} from "../contacts";
 import {useRecoilState, useResetRecoilState} from "recoil";
-import {PageState} from "./atom";
-import {index, initList} from "./atom";
+import {PageState} from "../atom";
+import {index, initList} from "../atom";
 
-const DetailPage = () => {
+const AddPage = () => {
     const setDetailState = useResetRecoilState(PageState);
     const setCurrentIndex = useResetRecoilState(index)
 
@@ -62,4 +62,4 @@ const DetailPage = () => {
         </div>
     )
 }
-export default DetailPage;
+export default AddPage;

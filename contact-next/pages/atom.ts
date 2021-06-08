@@ -7,20 +7,10 @@ export const initList = atom<IContacts[]>({
     default: contacts
 })
 
-export const searchedList = atom<IContacts[]>({
-    key: 'searchedList',
-    default: contacts
-})
-
 // useRecoilState 의 인자는 atom 과 selector 만 가능하다.
 export const currentState = atom<boolean>({
     key: 'currentState',
     default: false
-})
-
-export const actionState = atom<string>({
-    key: 'actionState',
-    default: 'read'
 })
 
 export const index = atom<number>({
@@ -28,19 +18,19 @@ export const index = atom<number>({
     default: -1
 })
 
-export const PageState = atom<boolean>({
+// export const PageState = atom<boolean>({
+//     key: 'PageState',
+//     default: false
+// })
+
+export const PageState = atom<string>({
     key: 'PageState',
-    default: false
+    default: 'DETAIL'
 })
 
 export const filterState = atom({
     key: 'filterState',
     default: "All"
-})
-
-export const UpdateAtom = atom({
-    key: 'UpdateAtom',
-    default: false
 })
 
 
@@ -82,3 +72,24 @@ export const filteredState = selector({
         return searchList.filter(data => data.name.toLowerCase().includes(searchInput));
     }
 });
+
+
+export const Page = selector({
+    key: 'Page',
+    get: ({get}) => {
+        const filter = get(PageState);
+
+        switch (filter) {
+            case "ADD":
+                return "ADD";
+            case "DETAIL":
+                return "DETAIL";
+            case "UPDATE":
+                return "UPDATE";
+        }
+    }
+})
+
+export const updateData = () => {
+
+}
