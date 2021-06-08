@@ -7,6 +7,11 @@ export const initList = atom<IContacts[]>({
     default: contacts
 })
 
+export const searchedList = atom<IContacts[]>({
+    key: 'searchedList',
+    default: contacts
+})
+
 // useRecoilState 의 인자는 atom 과 selector 만 가능하다.
 export const currentState = atom<boolean>({
     key: 'currentState',

@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import Search from "./Search";
-import {actionState, currentState, index, initList, UpdateAtom} from "./atom";
+import {currentState, index, initList, searchedList} from "./atom";
 
 export interface IContacts {
     id: number,
@@ -19,8 +19,10 @@ const Contacts = () => {
     const setSelect = useSetRecoilState<number>(index);
     const inputState = useRecoilValue<boolean>(currentState);
 
+    const [searchList, setSearchList] = useRecoilState<IContacts[]>(searchedList)
+
+
     const selectContact = (id: number): void => {
-        console.log(id)
         setSelect(id)
     }
 
@@ -44,8 +46,8 @@ const Contacts = () => {
                             return (
                                 <li key={idx} style={{"display": "flex"}}>
                                     <button type="button"
-                                        onClick={e => selectContact(contact.id)}>
-                                            {/*onClick={e => setSelect(contact.id)}>*/}
+                                            onClick={e => selectContact(contact.id)}>
+                                        {/*onClick={e => setSelect(contact.id)}>*/}
                                         {contact.name}
 
                                     </button>
@@ -66,7 +68,7 @@ const Contacts = () => {
                                 </li>
                             );
                         })}
-                        {inputState && data.map((contact, id) => {
+                        {inputState && searchList.map((contact, id) => {
                             return (
                                 <li key={id}>
                                     <button type="button"

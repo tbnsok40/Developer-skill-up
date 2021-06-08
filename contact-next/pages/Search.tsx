@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import contacts from '../contacts.json';
 import {useRecoilState, useSetRecoilState} from "recoil";
 import {IContacts} from "./contacts";
-import {currentState, index, initList} from "./atom";
+import {currentState, index, initList, searchedList} from "./atom";
 
 
 const Search = () => {
@@ -11,11 +11,12 @@ const Search = () => {
     const setSelect = useSetRecoilState<number>(index);
     const setInputState = useSetRecoilState<boolean>(currentState);
     const textRef = useRef<HTMLInputElement>(null);
+    const [searchList, setSearchList] = useRecoilState<IContacts[]>(searchedList)
 
     const onInput = ():void => {
         if (!textRef.current.value) {
             setInputState(false);
-            setContactList(contacts)
+            setContactList(contactList)
             setSelect(-1)
         } else {
             setInputState(true);
@@ -24,7 +25,8 @@ const Search = () => {
             if (tempData.length === 0) {
                 setSelect(-1)
             }
-            setContactList(tempData)
+
+            setSearchList(tempData)
         }
     }
     return (
