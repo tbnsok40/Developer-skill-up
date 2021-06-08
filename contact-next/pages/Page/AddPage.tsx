@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {IContacts} from "../contacts";
 import {useRecoilState, useResetRecoilState} from "recoil";
-import {PageState} from "../atom";
+import {PageState, protoType} from "../atom";
 import {index, initList} from "../atom";
 
 const AddPage = () => {
@@ -14,9 +14,14 @@ const AddPage = () => {
     });
     const {name, phone, sns, address} = input;
 
-
+    // update 하면, 순서가 꼬이면서 마지막 원소의 id가 항상 최대가 아니게 돤다 => update 로직을 수정하던가, max id 를 찾던가
     const getId = (List) => {
-        return List[List.length - 1].id + 1;
+        let max = -1;
+        List.map(li => li.id > max ? max = li.id : max);
+        return max + 1;
+
+        // 기존 로직
+        // return List[List.length - 1].id + 1;
     }
 
     const addItem = () => {

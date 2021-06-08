@@ -1,10 +1,15 @@
-import {atom, selector} from "recoil";
+import {atom, selector, useRecoilState} from "recoil";
 import contacts from "../contacts";
 import {IContacts} from "./contacts";
 
 export const initList = atom<IContacts[]>({
     key: 'defaultList',
     default: contacts
+})
+
+export const protoType = atom<IContacts>({
+    key: 'protoType',
+    default: {id: -1,name: '',phone: '', address:'', sns:''}
 })
 
 // useRecoilState 의 인자는 atom 과 selector 만 가능하다.
@@ -89,7 +94,3 @@ export const Page = selector({
         }
     }
 })
-
-export const updateData = () => {
-
-}
