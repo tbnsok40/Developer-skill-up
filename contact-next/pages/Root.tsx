@@ -1,28 +1,29 @@
 import {
-    useRecoilState, useSetRecoilState
+    useRecoilState,
+    useSetRecoilState
 } from "recoil";
 import React from "react";
-import Detail from "./detail";
+import DetailPage from "./DetailPage";
 import Contacts from "./contacts";
-import {DetailState} from "./atom";
+import {PageState} from "./atom";
+import AddPage from "./AddPage";
 
 const Root = () => {
 
-    const setDetailState = useSetRecoilState<boolean>(DetailState);
-
+    const [page, setPage] = useRecoilState<boolean>(PageState);
     const onAdd = () => {
-        setDetailState(true)
+        setPage(true)
     }
 
     return (
-            <div className="container">
-                <h1 className="subject">Phone Book</h1>
-                <div className="contact-wrap">
-                    <Contacts/>
-                    <Detail/>
-                </div>
-                <button onClick={onAdd}>추가</button>
+        <div className="container">
+            <h1 className="subject">Phone Book</h1>
+            <div className="contact-wrap">
+                <Contacts/>
+                {!page ? <DetailPage/> : <AddPage/>}
             </div>
+            <button onClick={onAdd}>추가</button>
+        </div>
     )
 }
 export default Root

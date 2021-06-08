@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
-import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import {selector, useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import Search from "./Search";
-import {currentState, index, initList, searchedList} from "./atom";
+import {filteredState, filterState, index, initList, searchedList} from "./atom";
 
 export interface IContacts {
     id: number,
@@ -13,13 +13,11 @@ export interface IContacts {
 
 const Contacts = () => {
 
-    const data = useRecoilValue(initList);
+    // const data = useRecoilValue(initList);
     const [newData, setNewData] = useRecoilState(initList)
-
     const setSelect = useSetRecoilState<number>(index);
-    const inputState = useRecoilValue<boolean>(currentState);
-
-    const [searchList, setSearchList] = useRecoilState<IContacts[]>(searchedList)
+    // const inputState = useRecoilValue<boolean>(currentState);
+    // const [searchList, setSearchList] = useRecoilState<IContacts[]>(searchedList)
 
 
     const selectContact = (id: number): void => {
@@ -36,18 +34,38 @@ const Contacts = () => {
         setSelect(id)
     }
 
+    // selector
+    // const filteredState = selector({
+    //     key: 'filteredState',
+    //     get: ({get}) => {
+    //         // const filter = 'All'
+    //         const filter = get(filterState); // 순환참조 원인, 'filteredState' selector 이름을 참조하고 있었음
+    //         const list = get(initList);
+    //         const search = get(searchedList);
+    //
+    //         switch (filter) {
+    //             case 'All':
+    //                 return list;
+    //
+    //             case 'SearchMode':
+    //                 return search;
+    //         }
+    //     }
+    // })
+    // const filteredData = useRecoilValue(filteredState);
+    const filteredData = useRecoilValue(filteredState);
+
     return (
         <Fragment>
             <div className="col left">
                 <Search/>
                 < div className="contact-list">
                     <ul>
-                        {!inputState && newData.map((contact, idx) => {
+                        {filteredData.map((contact, idx) => {
                             return (
                                 <li key={idx} style={{"display": "flex"}}>
                                     <button type="button"
                                             onClick={e => selectContact(contact.id)}>
-                                        {/*onClick={e => setSelect(contact.id)}>*/}
                                         {contact.name}
 
                                     </button>
@@ -60,22 +78,12 @@ const Contacts = () => {
                                         Edit
                                     </button>
                                     <button
-                                        // onClick={e => deleteData(contact.id)}
                                         onClick={e => onDelete(contact.id)}
                                         style={{"width": "50px", "background": "gray"}}>
                                         X
                                     </button>
                                 </li>
                             );
-                        })}
-                        {inputState && searchList.map((contact, id) => {
-                            return (
-                                <li key={id}>
-                                    <button type="button"
-                                            onClick={e => selectContact(contact.id)}>
-                                        {contact.name}
-                                    </button>
-                                </li>)
                         })}
                     </ul>
                 </div>

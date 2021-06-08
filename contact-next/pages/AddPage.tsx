@@ -1,19 +1,19 @@
 import React, {useState} from 'react';
 import {IContacts} from "./contacts";
-import {useRecoilState, useRecoilValue} from "recoil";
-import {DetailState} from "./atom";
+import {useRecoilState, useResetRecoilState} from "recoil";
+import {PageState} from "./atom";
 import {index, initList} from "./atom";
 
-const Detail = () => {
-    const [detailState, setDetailState] = useRecoilState<boolean>(DetailState);
-    const currentIndex = useRecoilValue<number>(index)
+const DetailPage = () => {
+    const setDetailState = useResetRecoilState(PageState);
+    const setCurrentIndex = useResetRecoilState(index)
+
     const [lists, setLists] = useRecoilState(initList);
     const [input, setInput] = useState<IContacts>({
         id: null, name: '', phone: '', sns: '', address: ''
     });
     const {name, phone, sns, address} = input;
 
-    const data:IContacts = lists.find(data => data.id === currentIndex);
 
     const getId = (List) => {
         return List[List.length - 1].id + 1;
@@ -33,10 +33,11 @@ const Detail = () => {
                 },
             ]
         );
-        setDetailState(false);
+        setDetailState();
         setInput({
             id: null, name: '', phone: '', sns: '', address: ''
         });
+        setCurrentIndex();
     }
 
     const onChange = (e) => {
@@ -49,17 +50,6 @@ const Detail = () => {
 
     return (
         <div className="col right">
-            {!detailState &&
-            <div className="details">
-                {data &&
-                <ul className="info" key={data.id}>
-                    <li>이름: {data.name}</li>
-                    <li>휴대폰:{data.phone} </li>
-                    <li>SNS:{data.sns} </li>
-                    <li>주소:{data.address} </li>
-                </ul>}
-            </div>}
-            {detailState &&
             <div className="details">
                 <ul className="info">
                     <li>이름: <input type="text" name='name' value={name} onChange={onChange}/></li>
@@ -68,8 +58,8 @@ const Detail = () => {
                     <li>주소: <input type="text" name='address' value={address} onChange={onChange}/></li>
                     <button onClick={addItem}>완료</button>
                 </ul>
-            </div>}
+            </div>
         </div>
     )
 }
-export default Detail;
+export default DetailPage;
