@@ -45,14 +45,14 @@ const Search = () => {
     };
 
     return (
-            <div className="search-box">
-                <input type="text"
-                       className="inp-sch"
-                       // ref={textRef}
-                       placeholder="검색어를 입력하세요."
-                       value = {searchInput}
-                       onChange={onInput}/>
-            </div>
+        <div className="search-box">
+            <input type="text"
+                   className="inp-sch"
+                // ref={textRef}
+                   placeholder="검색어를 입력하세요."
+                   value={searchInput}
+                   onChange={onInput}/>
+        </div>
     )
 }
 

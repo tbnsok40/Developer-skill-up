@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import Search from "./Search";
 import {filteredState, index, initList, PageState} from "./atom";
-import UpdatePage from "./Page/UpdatePage";
+import axios from "axios";
 
 export interface IContacts {
     id: number,
@@ -13,8 +13,6 @@ export interface IContacts {
 }
 
 const Contacts = () => {
-
-
     const [newData, setNewData] = useRecoilState(initList)
     const setSelect = useSetRecoilState<number>(index);
     const setPage = useSetRecoilState<string>(PageState);
@@ -22,12 +20,19 @@ const Contacts = () => {
     const selectContact = (id: number): void => {
         setSelect(id)
         setPage("DETAIL")
+        // axios.get("http://localhost:5000/contacts").then(res => console.log(res));
     }
 
     const onDelete = (id) => {
-        let tempData = [...newData];
-        tempData = tempData.filter(data => data.id !== id);
-        setNewData(tempData);
+        // let tempData = [...newData];
+        // tempData = tempData.filter(data => data.id !== id);
+        axios.delete(`http://localhost:5000/contacts/${id}`).then(res => {
+            setNewData([
+                ...res.data
+            ])
+            console.log(res.data)
+        });
+        // setNewData(tempData);
     }
 
     const onUpdate = (id) => {

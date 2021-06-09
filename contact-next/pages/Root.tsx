@@ -1,20 +1,31 @@
 import {
-    useRecoilState, useRecoilValue
+    useRecoilState,
+    useRecoilValue, useSetRecoilState
 } from "recoil";
-import React from "react";
+import React, {useEffect} from "react";
 import DetailPage from "./Page/DetailPage";
 import Contacts from "./contacts";
-import {Page, PageState} from "./atom";
+import {initList, Page, PageState} from "./atom";
 import AddPage from "./Page/AddPage";
 import UpdatePage from "./Page/UpdatePage";
+import axios from "axios";
 
 const Root = () => {
 
-    // const [page, setPage] = useRecoilState<boolean>(PageState);
-    const [page, setPage] = useRecoilState<string>(PageState);
+    const setPage = useSetRecoilState<string>(PageState);
     const onAdd = () => {
         setPage('ADD')
     }
+    const [data, setData] = useRecoilState(initList);
+
+    useEffect(() => {
+        axios.get("http://localhost:5000/contacts").then(res => {
+            setData(() => [
+                ...res.data
+            ])
+        });
+
+    },[])
 
     const SelectedPage = useRecoilValue(Page);
 
@@ -23,7 +34,6 @@ const Root = () => {
             <h1 className="subject">Phone Book</h1>
             <div className="contact-wrap">
                 <Contacts/>
-                {/*{!page ? <DetailPage/> : <AddPage/>}*/}
                 {SelectedPage === "ADD" && <AddPage/>}
                 {SelectedPage === "DETAIL" && <DetailPage/>}
                 {SelectedPage === "UPDATE" && <UpdatePage/>}

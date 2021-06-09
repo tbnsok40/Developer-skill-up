@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {IContacts} from "../contacts";
 import {useRecoilState, useResetRecoilState} from "recoil";
-import {PageState, protoType} from "../atom";
+import {PageState} from "../atom";
 import {index, initList} from "../atom";
+import axios from 'axios';
 
 const AddPage = () => {
     const setDetailState = useResetRecoilState(PageState);
@@ -27,16 +28,30 @@ const AddPage = () => {
     const addItem = () => {
         let id = getId(lists);
         // 여기에 useRecoilValue 를 쓸 수 없는 이유가 useRecoilValue 는 writable 하지 않기 때문이다(=수정불가)
-        setLists((oldList: IContacts[]) => [
-                ...oldList,
-                {
-                    id: id,
-                    name: input.name,
-                    phone: input.phone,
-                    sns: input.sns,
-                    address: input.address,
-                },
-            ]
+        // setLists((oldList: IContacts[]) => [
+        //         ...oldList,
+        //         {
+        //             id: id,
+        //             name: input.name,
+        //             phone: input.phone,
+        //             sns: input.sns,
+        //             address: input.address,
+        //         },
+        //     ]
+        // );
+        const data = {
+            name: input.name,
+            phone: input.phone,
+            sns: input.sns,
+            address: input.address,
+        }
+        axios.post("http://localhost:5000/contacts", data).then(
+            res => {
+                setLists((oldLists: IContacts[]) => [
+                    ...oldLists,
+                    res.data
+                ])
+            }
         );
         setDetailState();
         setInput({

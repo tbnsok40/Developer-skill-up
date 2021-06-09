@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {IContacts} from "../contacts";
-import {useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue, useResetRecoilState} from "recoil";
 import {PageState} from "../atom";
 import {index, initList} from "../atom";
 
