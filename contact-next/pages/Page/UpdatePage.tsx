@@ -3,6 +3,7 @@ import {IContacts} from "../contacts";
 import {useRecoilState, useRecoilValue, useResetRecoilState} from "recoil";
 import {PageState} from "../atom";
 import {index, initList} from "../atom";
+import axios from "axios";
 
 const UpdatePage = () => {
     const [lists, setLists] = useRecoilState(initList);
@@ -21,6 +22,7 @@ const UpdatePage = () => {
         })
     }, [])
 
+
     const onChange = (e) => {
         const {value, name} = e.target;
         setInput({
@@ -31,6 +33,7 @@ const UpdatePage = () => {
 
     const updateItem = () => {
         const temp = lists.filter(list => list.id !== currentIndex);
+        axios.patch(`http://localhost:5000/contacts/${currentIndex}`, input).then(r => console.log(r))
         setLists([...temp, input])
         setPage()
     }

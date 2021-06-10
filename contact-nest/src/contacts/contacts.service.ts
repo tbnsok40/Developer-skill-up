@@ -5,10 +5,10 @@ import { Repository } from "typeorm";
 
 @Injectable()
 export class ContactsService {
+
   constructor(
     @InjectRepository(contact) private contactRepository: Repository<contact>
-  ) {
-  }
+  ) {}
 
   findAll(): Promise<contact[]> {
     return this.contactRepository.find();
@@ -19,24 +19,13 @@ export class ContactsService {
   }
 
   create(contactData) {
-    console.log(contactData);
     return this.contactRepository.save(contactData);
   }
 
-  // private contacts = [];
-  // getAll() {
-  //     return this.contacts
-  // }
-  //
-  // createData(contactData) {
-  //     const returnData = {
-  //         id: this.contacts.length + 1,
-  //         ...contactData
-  //     }
-  //     this.contacts.push(returnData)
-  //     return this.contacts;
-  // }
-  //
+  patch(id, contactData) {
+    return this.contactRepository.update(id, contactData)
+  }
+
   delete(id): Promise<contact[]> {
     return this.contactRepository.delete(id).then((r) => {
         return this.contactRepository.find();

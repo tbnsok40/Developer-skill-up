@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Param} from '@nestjs/common/decorators';
+import { Body, Controller, Delete, Get, Param, Patch } from "@nestjs/common/decorators";
 import {ContactsService} from "./contacts.service";
 import {Post} from "@nestjs/common";
 import {contact} from "./entities/contact.entity";
@@ -13,27 +13,19 @@ export class ContactsController {
     async findAll(): Promise<contact[]>{
         return this.contactsService.findAll();
     }
-
-    // @Get(":id")
-    // async findById(@Param("id") id: number): Promise<contact[]>{
-    //     return this.contactsService.findById(id);
-    // }
-
-
-
-    // async findAll(): Promise<Contact[]> {
-    //     return this.contactsService.getAll();
-    // }
-    // @Get(":id") 이런 방법도 가능
     // exception 처리도 해줄 것.
-
     @Post()
-    create(@Body() contactData){
+    create(@Body() contactData: contact){
         return this.contactsService.create(contactData);
     }
 
+    @Patch(":id")
+    async patch(@Param("id") id: string, @Body() contactData: contact) {
+        return this.contactsService.patch(id, contactData);
+    }
+
     @Delete(":id")
-    async delete(@Param('id') id): Promise<contact[]> {
+    async delete(@Param("id") id: string): Promise<contact[]> {
         return this.contactsService.delete(id);
     }
 
