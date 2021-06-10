@@ -1,4 +1,4 @@
-import { Get, Injectable, Post } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { contact } from "./entities/contact.entity";
 import { Repository } from "typeorm";
@@ -6,9 +6,8 @@ import { Repository } from "typeorm";
 @Injectable()
 export class ContactsService {
 
-  constructor(
-    @InjectRepository(contact) private contactRepository: Repository<contact>
-  ) {}
+  constructor(@InjectRepository(contact) private contactRepository: Repository<contact>) {
+  }
 
   findAll(): Promise<contact[]> {
     return this.contactRepository.find();
@@ -23,7 +22,7 @@ export class ContactsService {
   }
 
   patch(id, contactData) {
-    return this.contactRepository.update(id, contactData)
+    return this.contactRepository.update(id, contactData);
   }
 
   delete(id): Promise<contact[]> {
