@@ -1,5 +1,5 @@
-import React, {Fragment} from 'react';
-import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import React from 'react';
+import {useRecoilValue, useSetRecoilState} from "recoil";
 import Search from "./Search";
 import {filteredState, index, initList, PageState} from "./atom";
 import axios from "axios";
@@ -13,26 +13,21 @@ export interface IContacts {
 }
 
 const Contacts = () => {
-    const [newData, setNewData] = useRecoilState(initList)
+    const setNewData = useSetRecoilState(initList);
     const setSelect = useSetRecoilState<number>(index);
     const setPage = useSetRecoilState<string>(PageState);
 
     const selectContact = (id: number): void => {
         setSelect(id)
         setPage("DETAIL")
-        // axios.get("http://localhost:5000/contacts").then(res => console.log(res));
     }
 
     const onDelete = (id) => {
-        // let tempData = [...newData];
-        // tempData = tempData.filter(data => data.id !== id);
         axios.delete(`http://localhost:5000/contacts/${id}`).then(res => {
             setNewData([
                 ...res.data
             ])
-            console.log(res.data)
         });
-        // setNewData(tempData);
     }
 
     const onUpdate = (id) => {
@@ -43,39 +38,36 @@ const Contacts = () => {
     const filteredData = useRecoilValue(filteredState);
 
     return (
-        <Fragment>
-            <div className="col left">
-                <Search/>
-                < div className="contact-list">
-                    <ul>
-                        {filteredData.map((contact, idx) => {
-                            return (
-                                <li key={idx} style={{"display": "flex"}}>
-                                    <button type="button"
-                                            onClick={e => selectContact(contact.id)}>
-                                        {contact.name}
-
-                                    </button>
-                                    <button
-                                        onClick={e => onUpdate(contact.id)}
-                                        style={{
-                                            "width": "50px", "background": "gray",
-                                            "opacity": "50%"
-                                        }}>
-                                        Edit
-                                    </button>
-                                    <button
-                                        onClick={e => onDelete(contact.id)}
-                                        style={{"width": "50px", "background": "gray"}}>
-                                        X
-                                    </button>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </div>
+        <div className="col left">
+            <Search/>
+            < div className="contact-list">
+                <ul>
+                    {filteredData.map((contact, idx) => {
+                        return (
+                            <li key={idx} style={{"display": "flex"}}>
+                                <button type="button"
+                                        onClick={() => selectContact(contact.id)}>
+                                    {contact.name}
+                                </button>
+                                <button
+                                    onClick={() => onUpdate(contact.id)}
+                                    style={{
+                                        "width": "50px", "background": "gray",
+                                        "opacity": "50%"
+                                    }}>
+                                    Edit
+                                </button>
+                                <button
+                                    onClick={() => onDelete(contact.id)}
+                                    style={{"width": "50px", "background": "gray"}}>
+                                    X
+                                </button>
+                            </li>
+                        );
+                    })}
+                </ul>
             </div>
-        </Fragment>
+        </div>
     )
 }
 

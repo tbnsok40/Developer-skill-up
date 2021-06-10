@@ -1,21 +1,9 @@
 import {atom, selector} from "recoil";
-import contacts from "../contacts";
 import {IContacts} from "./contacts";
 
 export const initList = atom<IContacts[]>({
     key: 'defaultList',
     default: []
-})
-
-export const protoType = atom<IContacts>({
-    key: 'protoType',
-    default: {id: -1, name: '', phone: '', address: '', sns: ''}
-})
-
-// useRecoilState 의 인자는 atom 과 selector 만 가능하다.
-export const currentState = atom<boolean>({
-    key: 'currentState',
-    default: false
 })
 
 export const index = atom<number>({
@@ -26,11 +14,6 @@ export const index = atom<number>({
 export const PageState = atom<string>({
     key: 'PageState',
     default: 'DETAIL'
-})
-
-export const filterState = atom({
-    key: 'filterState',
-    default: "All"
 })
 
 export const searchInputState = atom<string>({

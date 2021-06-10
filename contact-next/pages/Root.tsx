@@ -1,5 +1,4 @@
 import {
-    useRecoilState,
     useRecoilValue, useSetRecoilState
 } from "recoil";
 import React, {useEffect} from "react";
@@ -11,12 +10,12 @@ import UpdatePage from "./Page/UpdatePage";
 import axios from "axios";
 
 const Root = () => {
-
     const setPage = useSetRecoilState<string>(PageState);
     const onAdd = () => {
         setPage('ADD')
     }
-    const [data, setData] = useRecoilState(initList);
+    const setData = useSetRecoilState(initList);
+    const SelectedPage = useRecoilValue(Page);
 
     useEffect(() => {
         axios.get("http://localhost:5000/contacts").then(res => {
@@ -24,10 +23,8 @@ const Root = () => {
                 ...res.data
             ])
         });
-
     },[])
 
-    const SelectedPage = useRecoilValue(Page);
 
     return (
         <div className="container">
